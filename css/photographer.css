@@ -93,7 +93,7 @@ main {
     position: absolute;
     top: 50%;
     right: 18px;
-    transform: translate(-50%, -50%) rotate(90deg);
+    transform: translate(-50%, -50%) rotate(90deg)scaleX(-1);
     color: #fff;
     font-size: 20px;
     pointer-events: none;
@@ -101,7 +101,7 @@ main {
     transition: all 250ms ease-in-out;
 }
 .select-selected.select-arrow-active::after {
-    transform: translate(-50%, -50%) rotate(90deg) scaleX(-1);
+    transform: translate(-50%, -50%) rotate(90deg);
 }
 .select-selected.select-arrow-active { 
     border-radius: 5px 5px 0 0;
