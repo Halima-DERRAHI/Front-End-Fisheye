@@ -97,7 +97,6 @@ main {
     color: #fff;
     font-size: 20px;
     pointer-events: none;
-    z-index: 2;
     transition: all 250ms ease-in-out;
 }
 .select-selected.select-arrow-active::after {

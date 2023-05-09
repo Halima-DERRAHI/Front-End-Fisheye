@@ -8,6 +8,8 @@ const firstName = document.getElementById("first");
 const lastName = document.getElementById("last");
 const email = document.getElementById("email");
 const message = document.querySelector("textarea");
+const btn = document.querySelector(".contact_button");
+const contactBtn = document.querySelector("#contact_modal");
 
 function displayModal() {
 	modal.style.display = "block";
@@ -22,9 +24,19 @@ function displayModal() {
 	email.addEventListener("input", validateEmail);
 	message.addEventListener("input", validateMessage);
 	
-	// form submit
+	// form event on click
 	form.addEventListener("submit", function (e) {
 		e.preventDefault();
+		formSubmit();
+	});
+
+	// form event on Enter
+	btn.addEventListener("keydown", (e) => { if ( e.key === "Enter" ) { 
+		form.submit();
+	}});
+	
+	// form submit
+	function formSubmit() {
 		validate();
 		if (
 			validateFirstName() &&
@@ -37,7 +49,7 @@ function displayModal() {
 			hideAllMsg();
 			form.reset();
 		}
-	});
+	}
 
 	// validation form
 	function validate() {
@@ -173,13 +185,16 @@ function displayModal() {
 
 // Close Contact Modal
 function closeModal() {
-
 	modal.style.display = "none";
 }
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") { closeModal(); }});
+
+contactBtn.addEventListener("keydown", (e) => { if ( e.key === "Enter" ) {
+	contactBtn.click();
+}});
 
 // Display form informations on console
 function displayConsole() {
-    
 	console.log("Prénom :" + firstName.value);
 	console.log("Nom :" + lastName.value);
 	console.log("E-mail :" + email.value);

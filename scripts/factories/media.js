@@ -17,13 +17,15 @@ async function mediaFactory(photographerName, media) {
 			const imageElement = document.createElement("img");
 			imageElement.setAttribute("src", imagePath);
 			imageElement.setAttribute("alt", title);
+			imageElement.setAttribute("role", "link");
+			imageElement.setAttribute("tabindex", "0");
 			const mediaImage = document.createElement("div");
 			mediaImage.classList.add("media_image");
 			mediaImage.appendChild(imageElement);
-			const a = document.createElement("a");
-			a.addEventListener("click" , () => { lightboxFactory(mediaImage , media); });
-			a.appendChild(mediaImage);
-			mediaElement.appendChild(a);
+			mediaImage.addEventListener("click" , () => { lightboxFactory(mediaImage , media); });
+			mediaImage.addEventListener("keydown" , (event) => { 
+				if (event.key === "Enter") {mediaImage.click(); }});
+			mediaElement.appendChild(mediaImage);
 		}
 
 		if (media.video) {
@@ -32,13 +34,15 @@ async function mediaFactory(photographerName, media) {
 			const videoElement = document.createElement("video");
 			videoElement.setAttribute("src", videoPath);
 			videoElement.setAttribute("title", title);
+			videoElement.setAttribute("role", "link");
+			videoElement.setAttribute("tabindex", "0");
 			const mediaVideo = document.createElement("div");
 			mediaVideo.classList.add("media_video");
 			mediaVideo.appendChild(videoElement);
-			const a = document.createElement("a");
-			a.addEventListener("click" , () => { lightboxFactory(mediaVideo , media); });
-			a.appendChild(mediaVideo);
-			mediaElement.appendChild(a);
+			mediaVideo.addEventListener("click" , () => { lightboxFactory(mediaVideo , media); });
+			mediaVideo.addEventListener("keydown" , (event) => { 
+				if (event.key === "Enter") {mediaVideo.click();} });
+			mediaElement.appendChild(mediaVideo);
 		}
 		
 		mediaInfoFactory(title, likes, media, mediaElement);
@@ -58,18 +62,30 @@ function mediaInfoFactory(title, likes, media, mediaElement ) {
 
 	const mediaTitle = document.createElement("h2");
 	mediaTitle.classList.add("media_title");
+	mediaTitle.setAttribute("role", "text");
 	mediaTitle.textContent = title;
 
 	const mediaLikes = document.createElement("div");
 	mediaLikes.classList.add("media_likes");
 
 	const likesNumber = document.createElement("p");
+	likesNumber.setAttribute("aria-label", "nombre de likes");
 	likesNumber.textContent = likes;
 
 	const likesIcon = document.createElement("i");
-	likesIcon.setAttribute("class", "fa-sharp fa-regular fa-heart");
-	likesIcon.setAttribute("area-label", "likes");
-	likesIcon.addEventListener("click" , () => { manageLikes(media, likesNumber ,likesIcon );});
+	if(media.isLiked) {
+		likesIcon.setAttribute("class", "fa-sharp fa-solid fa-heart");
+	}else {
+		likesIcon.setAttribute("class", "fa-sharp fa-regular fa-heart");
+	}
+	likesIcon.setAttribute("aria-label", "likes");
+	likesIcon.setAttribute("tabindex", "0");
+	likesIcon.setAttribute("aria-label", "likes");
+	likesIcon.addEventListener("click" , () => { 
+		media.isLiked = !media.isLiked;
+		manageLikes(media, likesNumber ,likesIcon );});
+	likesIcon.addEventListener("keydown" , (event) => { 
+		if (event.key === "Enter") {likesIcon.click(); }});
 	mediaLikes.appendChild(likesNumber);
 	mediaLikes.appendChild(likesIcon);
 	mediaInfo.appendChild(mediaTitle);
@@ -83,13 +99,13 @@ function manageLikes(media, likesNumber , likesIcon) {
 	const totalLikes = document.querySelector(".total-likes");
 	const imageLikes = media.likes;
 
-	if (likesIcon.classList.contains("fa-regular")) {
+	if (media.isLiked) {
 		const newLikes = imageLikes + 1;
 		media.likes = newLikes;
 		
 		likesNumber.textContent = newLikes;
 		totalLikes.textContent = parseInt(totalLikes.textContent) + 1;
-		likesIcon.className = "fa-sharp fa-solid fa-heart";
+		likesIcon.className = "fas-sharp fa-solid fa-heart";
 	}
 	else {
 		const newLikes = imageLikes - 1;
@@ -97,15 +113,17 @@ function manageLikes(media, likesNumber , likesIcon) {
 
 		likesNumber.textContent = newLikes;
 		totalLikes.textContent = parseInt(totalLikes.textContent) - 1;
-		likesIcon.className = "fa-sharp fa-regular fa-heart";
+		likesIcon.className = "fas-sharp fa-regular fa-heart";
 	}
 }
 
 // lightbox factory function
 
+const lightbox = document.querySelector("#lightbox");
+//const activeLightbox = lightbox.classList.contains("active");
+
 function lightboxFactory(mediaContainer) {
 
-	const lightbox = document.getElementById("lightbox");
 	lightbox.classList.add("active");
 
 	const lightboxClose = document.querySelector(".lightbox-close");
@@ -134,16 +152,31 @@ function lightboxFactory(mediaContainer) {
 	titleElement.classList.add("new_media_title");
 	titleElement.textContent = mediaTitle;
 	lightboxMedia.appendChild(titleElement);
+
 }
 
 // Close lightbox function
 
 function closeLightBox() {
-	const lightbox = document.getElementById("lightbox");
-	const lightboxImage = document.querySelector(".lightbox-image");
-	lightboxImage.innerHTML = "";
 	lightbox.classList.remove("active");
 }
+
+// lightbox EVENT
+
+document.addEventListener("keydown", function (e) {
+
+	if(lightbox.className == "active") {
+		if (e.key === "ArrowLeft") {
+			prevLightbox();
+		} 
+		else if (e.key === "ArrowRight") {
+			nextLightbox();
+		} 
+		else if (e.key === "Escape") {
+			closeLightBox();
+		} 
+	}
+});
 
 // Next lightbox
 
@@ -157,9 +190,10 @@ function nextLightbox() {
 	if (nextIndex === medias.length) {
 		nextIndex = 0;
 	}
-
+	console.log(nextIndex);
 	const nextMedia = medias[nextIndex];
 	lightboxFactory(nextMedia);
+	console.log(nextMedia);
 }
 
 // Previous lightbox
@@ -167,12 +201,16 @@ function nextLightbox() {
 const iconPrev = document.querySelector(".prev");
 iconPrev.addEventListener("click", () => prevLightbox());
 
-async function prevLightbox() {
+function prevLightbox() {
 	const currentIndex = medias.findIndex(media => [media.querySelector("img"), media.querySelector("video")].includes(currentMedia));
 	let prevIndex = currentIndex - 1 ;
 	if (prevIndex === -1) {
 		prevIndex = medias.length - 1;
 	}
-	const nextMedia = medias[prevIndex];
-	lightboxFactory(nextMedia);
+	console.log(prevIndex);
+
+	const prevMedia = medias[prevIndex];
+	lightboxFactory(prevMedia);
+	console.log(prevMedia);
 }
+

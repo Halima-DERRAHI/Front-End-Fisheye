@@ -1,10 +1,14 @@
-
 async function displaySortMedia(photographerName, media) {
 
 	const selectContainer = document.querySelector(".select-container");
 	const selectElement = selectContainer.querySelector("select");
 	const selectedElement = document.createElement("div");
 	const optionsList = document.createElement("div");
+	
+	selectedElement.setAttribute("role" , "button");
+	selectedElement.setAttribute("name" , "sort");
+	selectedElement.setAttribute("aria-labelledby" , "order by");
+	selectedElement.setAttribute("tabindex" , "0");
 
 	selectedElement.classList.add("select-selected");
 	selectedElement.textContent = selectElement.options[selectElement.selectedIndex].textContent;
@@ -12,10 +16,12 @@ async function displaySortMedia(photographerName, media) {
 	optionsList.classList.add("select-items", "select-hide");
 
 	await sortMedia(selectedElement.textContent);
+	
+	function createOptionItem(option) {
 
-	for (let option of selectElement.options) {
 		const optionItem = document.createElement("div");
 		optionItem.textContent = option.textContent;
+		optionItem.setAttribute("tabindex" , "0");
 
 		optionItem.addEventListener("click", () => {
 			const previousOptionItem = optionsList.querySelector(".select-hide-option");
@@ -29,7 +35,17 @@ async function displaySortMedia(photographerName, media) {
 			optionsList.insertBefore(optionItem, optionsList.firstChild);
 			sortMedia(optionItem.textContent);
 		});
-        
+
+		optionItem.addEventListener("keydown", (e) => {
+			if (e.key === "Enter") {
+				optionItem.click();
+			}
+		});
+		return optionItem;
+	}
+
+	for (let option of selectElement.options) {
+		const optionItem = createOptionItem(option);
 		if (selectedElement.textContent !== optionItem.textContent) {
 			optionsList.appendChild(optionItem);
 		} else {
@@ -46,6 +62,18 @@ async function displaySortMedia(photographerName, media) {
 		selectedElement.classList.toggle("select-arrow-active");
 	});
 
+	selectedElement.addEventListener("keydown", (e) => {
+		if (e.key === "Enter") {
+			selectedElement.click();
+		}
+	});
+	
+	document.body.addEventListener("click" , (event) => {
+		if (!optionsList.contains(event.target)) {
+			optionsList.classList.add("select-hide");
+			selectedElement.classList.remove("select-arrow-active");
+		}
+	});
 
 	function sortMedia(sortBy) {
 		let sortedMedia = [];
