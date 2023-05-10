@@ -8,11 +8,13 @@ const firstName = document.getElementById("first");
 const lastName = document.getElementById("last");
 const email = document.getElementById("email");
 const message = document.querySelector("textarea");
-const btn = document.querySelector(".contact_button");
-const contactBtn = document.querySelector("#contact_modal");
 
 function displayModal() {
+	
 	modal.style.display = "block";
+	
+	// Focus on form first element
+	firstName.focus();
 
 	// Photographer name
 	const photographerName = document.querySelector(".photographer-name");
@@ -29,11 +31,6 @@ function displayModal() {
 		e.preventDefault();
 		formSubmit();
 	});
-
-	// form event on Enter
-	btn.addEventListener("keydown", (e) => { if ( e.key === "Enter" ) { 
-		form.submit();
-	}});
 	
 	// form submit
 	function formSubmit() {
@@ -76,7 +73,7 @@ function displayModal() {
 			return false;
 		}
 		// Check if the string is valid
-		else if (!firstName.value.match(/^[a-zA-Z\s\-À-ÖØ-öø-ÿ']+$/g)) {
+		else if (!firstName.value.match(/^[a-zA-Z\s-']+$/g)) {
 			checkMsg(firstName, "Veuillez entrer un prénom valide.", "input-error");
 			return false;
 		}
@@ -104,7 +101,7 @@ function displayModal() {
 			return false;
 		}
 		// Check if the string is valid
-		else if (!lastName.value.match(/^[a-zA-Z\s\-À-ÖØ-öø-ÿ']+$/g)) {
+		else if (!lastName.value.match(/^[a-zA-Z\s-']+$/g)) {
 			checkMsg(lastName, "Veuillez entrer un nom valide.", "input-error");
 			return false;
 		}
@@ -147,13 +144,13 @@ function displayModal() {
 		else if (message.value.length < 5) {
 			checkMsg(
 				message,
-				"Veuillez entrer 2 caractères ou plus pour le champ du message.",
+				"Veuillez entrer 5 caractères ou plus pour le champ du message.",
 				"input-error"
 			);
 			return false;
 		}
 		// Check if the string is valid
-		else if (!message.value.match(/^[a-zA-Z\s\-À-ÖØ-öø-ÿ']+$/g)) {
+		else if (!message.value.match(/^[a-zA-Z\s-']+$/g)) {
 			checkMsg(message, "Veuillez entrer un message valide.", "input-error");
 			return false;
 		}
@@ -189,9 +186,6 @@ function closeModal() {
 }
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") { closeModal(); }});
 
-contactBtn.addEventListener("keydown", (e) => { if ( e.key === "Enter" ) {
-	contactBtn.click();
-}});
 
 // Display form informations on console
 function displayConsole() {
@@ -200,3 +194,32 @@ function displayConsole() {
 	console.log("E-mail :" + email.value);
 	console.log("Votre message :" + message.value);
 }
+
+// the elements inside modal to make focusable
+
+const  focusableElements = "button, input, textarea, [tabindex]:not([tabindex=\"-1\"])";
+const firstFocusableElement = modal.querySelectorAll(focusableElements)[0];
+const focusableContent = modal.querySelectorAll(focusableElements);
+const lastFocusableElement = focusableContent[focusableContent.length - 1];
+
+document.addEventListener("keydown", function(e) {
+	let isTabPressed = e.key === "Tab";
+  
+	if (!isTabPressed) {
+		return;
+	}
+  
+	if (e.shiftKey) {
+		if (document.activeElement === firstFocusableElement) {
+			lastFocusableElement.focus();
+			e.preventDefault();
+		}
+	} else { 
+		if (document.activeElement === lastFocusableElement) { 
+			firstFocusableElement.focus();	
+			e.preventDefault();
+		}
+	}
+});
+  
+firstName.focus();
