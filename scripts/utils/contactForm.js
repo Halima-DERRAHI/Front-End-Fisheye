@@ -10,7 +10,7 @@ const email = document.getElementById("email");
 const message = document.querySelector("textarea");
 
 function displayModal() {
-	
+
 	modal.style.display = "block";
 	
 	// Focus on form first element
@@ -27,7 +27,7 @@ function displayModal() {
 	message.addEventListener("input", validateMessage);
 	
 	// form event on click
-	form.addEventListener("submit", function (e) {
+	form.addEventListener("submit", (e) => {
 		e.preventDefault();
 		formSubmit();
 	});
@@ -189,10 +189,10 @@ document.addEventListener("keydown", (e) => { if (e.key === "Escape") { closeMod
 
 // Display form informations on console
 function displayConsole() {
-	console.log("Prénom :" + firstName.value);
-	console.log("Nom :" + lastName.value);
-	console.log("E-mail :" + email.value);
-	console.log("Votre message :" + message.value);
+	console.log(`Prénom : ${firstName.value}`);
+	console.log(`Nom : ${lastName.value}`);
+	console.log(`E-mail : ${email.value}`);
+	console.log(`Votre message : ${message.value}`);
 }
 
 // the elements inside modal to make focusable
@@ -202,7 +202,7 @@ const firstFocusableElement = modal.querySelectorAll(focusableElements)[0];
 const focusableContent = modal.querySelectorAll(focusableElements);
 const lastFocusableElement = focusableContent[focusableContent.length - 1];
 
-document.addEventListener("keydown", function(e) {
+document.addEventListener("keydown", (e) => {
 	let isTabPressed = e.key === "Tab";
   
 	if (!isTabPressed) {
@@ -221,5 +221,3 @@ document.addEventListener("keydown", function(e) {
 		}
 	}
 });
-  
-firstName.focus();

@@ -37,9 +37,7 @@ async function displaySortMedia(photographerName, media) {
 		});
 
 		optionItem.addEventListener("keydown", (e) => {
-			if (e.key === "Enter") {
-				optionItem.click();
-			}
+			if (e.key === "Enter") optionItem.click();
 		});
 		return optionItem;
 	}
@@ -68,8 +66,8 @@ async function displaySortMedia(photographerName, media) {
 		}
 	});
 	
-	document.body.addEventListener("click" , (event) => {
-		if (!optionsList.contains(event.target)) {
+	document.body.addEventListener("click" , (e) => {
+		if (!optionsList.contains(e.target)) {
 			optionsList.classList.add("select-hide");
 			selectedElement.classList.remove("select-arrow-active");
 		}
