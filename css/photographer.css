@@ -69,9 +69,10 @@ main {
 .select-element{
     margin: 30px 100px;
 }
-.select-element p {
+.select-element label {
     font-size: 18px;
     font-weight: 700;
+    padding-right: 10px;
 }
 .select-container {
     display: inline-block;
