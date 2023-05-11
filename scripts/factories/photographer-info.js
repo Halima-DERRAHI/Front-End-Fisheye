@@ -1,3 +1,5 @@
+// photographer header function
+
 function photographHeaderFactory(photographer) {
 
 	const { name, portrait, city, country, tagline } = photographer;
@@ -25,19 +27,22 @@ function photographHeaderFactory(photographer) {
 	return {div, img};
 }
 
+// photographer footer function
+
 function photographerFooterFactory(totalLikes, photographer) {
 
 	const footerInfo = document.querySelector(".footer-info");
-
 	const likesElement = document.createElement("div");
 	const likes = document.createElement("p");
 	likes.className = "total-likes";
 	likes.textContent = `${totalLikes}`; 
 	likesElement.appendChild(likes);
+
 	const likesIcon = document.createElement("i");
 	likesIcon.setAttribute("class", "fas fa-heart");
 	likesIcon.setAttribute("area-label", "likes");
 	likesElement.appendChild(likesIcon);
+
 	const priceElement = document.createElement("p");
 	priceElement.textContent = `${photographer.price} €/jour`;
 

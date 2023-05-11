@@ -1,4 +1,5 @@
 // le code JavaScript lié à la page photographer.html
+
 async function getPhotographers() {
 	// Récupèrer les données du fichier JSON
 	const reponse = await fetch("data/photographers.json");
@@ -12,6 +13,8 @@ const urlId = new URL(url);
 const params = new URLSearchParams(urlId.search);
 const paramsId = params.get("id");
 
+// get photographer by url id
+
 async function getPhotographer() {
 	const { photographers } = await getPhotographers();
 	const photographer = photographers.find( ph => ph.id === Number(paramsId));
@@ -19,7 +22,10 @@ async function getPhotographer() {
 	return photographer;
 }
 
+// display photographer informations
+
 async function displayPhotographerHeader(photographer) {
+
 	const photographHeader = document.querySelector(".photograph-header");
 	const headerFactory = await photographHeaderFactory(photographer);
 	const { div, img } = headerFactory;
@@ -28,16 +34,18 @@ async function displayPhotographerHeader(photographer) {
 	photographHeader.appendChild(img);
 }
 
+
 let mediasToSort = [];
 let photographerNameToSort;
 
 async function displayPhotographerMedia(photographers, photographer) {
 	
-	// sort media by popularity
+	// sort media by initial option
 	photographers.media.sort((a, b) => b.likes - a.likes);
 
 	const photographerName = photographer.name.replace(/\s+/g, "_");
 	photographerNameToSort = photographerName;
+	
 	const mediaContainer = document.querySelector(".media-container");
 	let totalLikes = 0;
 
@@ -53,6 +61,7 @@ async function displayPhotographerMedia(photographers, photographer) {
 			mediasToSort.push(media);
 		}
 	}
+
 	photographerFooterFactory(totalLikes, photographer);
 }
 
@@ -60,6 +69,7 @@ async function init() {
 
 	const photographers = await getPhotographers();
 	const photographer = await getPhotographer();
+
 	displayPhotographerHeader(photographer);
 	displayPhotographerMedia(photographers, photographer);
 	displaySortMedia(photographerNameToSort , mediasToSort);

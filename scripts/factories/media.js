@@ -11,6 +11,8 @@ async function mediaFactory(photographerName, media) {
 		const mediaElement = document.createElement("div");
 		mediaElement.classList.add("media");
 
+		// create image card
+
 		if (media.image) {
 			const { image } = media;
 			const imagePath = `assets/images/${photographerName}/${image}`;
@@ -23,10 +25,12 @@ async function mediaFactory(photographerName, media) {
 			mediaImage.classList.add("media_image");
 			mediaImage.appendChild(imageElement);
 			mediaImage.addEventListener("click" , () => { lightboxFactory(mediaImage , media); });
-			mediaImage.addEventListener("keydown" , (event) => { 
-				if (event.key === "Enter") {mediaImage.click(); }});
+			mediaImage.addEventListener("keydown" , (e) => { 
+				if (e.key === "Enter") {mediaImage.click(); }});
 			mediaElement.appendChild(mediaImage);
 		}
+
+		// create video card
 
 		if (media.video) {
 			const { video } = media;
@@ -40,12 +44,13 @@ async function mediaFactory(photographerName, media) {
 			mediaVideo.classList.add("media_video");
 			mediaVideo.appendChild(videoElement);
 			mediaVideo.addEventListener("click" , () => { lightboxFactory(mediaVideo , media); });
-			mediaVideo.addEventListener("keydown" , (event) => { 
-				if (event.key === "Enter") {mediaVideo.click();} });
+			mediaVideo.addEventListener("keydown" , (e) => { 
+				if (e.key === "Enter") {mediaVideo.click();} });
 			mediaElement.appendChild(mediaVideo);
 		}
 		
 		mediaInfoFactory(title, likes, media, mediaElement);
+		
 		medias.push(mediaElement);
 
 		return mediaElement;
@@ -73,24 +78,31 @@ function mediaInfoFactory(title, likes, media, mediaElement ) {
 	likesNumber.textContent = likes;
 
 	const likesIcon = document.createElement("i");
+
 	if(media.isLiked) {
 		likesIcon.setAttribute("class", "fa-sharp fa-solid fa-heart");
 	}else {
 		likesIcon.setAttribute("class", "fa-sharp fa-regular fa-heart");
 	}
+
 	likesIcon.setAttribute("aria-label", "likes");
 	likesIcon.setAttribute("tabindex", "0");
 	likesIcon.setAttribute("aria-label", "likes");
-	likesIcon.addEventListener("click" , () => { 
-		media.isLiked = !media.isLiked;
-		manageLikes(media, likesNumber ,likesIcon );});
-	likesIcon.addEventListener("keydown" , (event) => { 
-		if (event.key === "Enter") {likesIcon.click(); }});
+
 	mediaLikes.appendChild(likesNumber);
 	mediaLikes.appendChild(likesIcon);
 	mediaInfo.appendChild(mediaTitle);
 	mediaInfo.appendChild(mediaLikes);
 	mediaElement.appendChild(mediaInfo);
+
+	// like icon events
+
+	likesIcon.addEventListener("click" , () => { 
+		media.isLiked = !media.isLiked;
+		manageLikes(media, likesNumber ,likesIcon );});
+
+	likesIcon.addEventListener("keydown" , (e) => { 
+		if (e.key === "Enter") {likesIcon.click(); }});
 }
 
 // Likes click
@@ -120,7 +132,6 @@ function manageLikes(media, likesNumber , likesIcon) {
 // lightbox factory function
 
 const lightbox = document.querySelector("#lightbox");
-//const activeLightbox = lightbox.classList.contains("active");
 
 function lightboxFactory(mediaContainer) {
 
@@ -186,14 +197,13 @@ iconNext.addEventListener("click", () => nextLightbox());
 function nextLightbox() {
 	const currentIndex = medias.findIndex(media => [media.querySelector("img"), media.querySelector("video")].includes(currentMedia));
 	let nextIndex = currentIndex + 1 ;
-
+	console.log(medias);	
 	if (nextIndex === medias.length) {
 		nextIndex = 0;
 	}
-	console.log(nextIndex);
+
 	const nextMedia = medias[nextIndex];
 	lightboxFactory(nextMedia);
-	console.log(nextMedia);
 }
 
 // Previous lightbox
@@ -207,10 +217,8 @@ function prevLightbox() {
 	if (prevIndex === -1) {
 		prevIndex = medias.length - 1;
 	}
-	console.log(prevIndex);
 
 	const prevMedia = medias[prevIndex];
 	lightboxFactory(prevMedia);
-	console.log(prevMedia);
 }
 
