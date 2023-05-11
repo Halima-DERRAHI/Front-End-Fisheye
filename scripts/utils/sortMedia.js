@@ -95,6 +95,8 @@ async function displaySortMedia(photographerName, media) {
 		const mediaContainer = document.querySelector(".media-container");
 		mediaContainer.innerHTML = "";
 
+		medias.length = 0;
+		
 		sortedMedia.forEach(async (media) => {
 			const photographMedia = await mediaFactory(photographerName, media);
 			const sortedMediaCardDOM = photographMedia.getMediaCardDOM();
