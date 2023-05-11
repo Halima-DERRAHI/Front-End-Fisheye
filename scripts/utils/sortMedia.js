@@ -7,7 +7,7 @@ async function displaySortMedia(photographerName, media) {
 	
 	selectedElement.setAttribute("role" , "button");
 	selectedElement.setAttribute("name" , "sort");
-	selectedElement.setAttribute("aria-labelledby" , "order by");
+	selectedElement.setAttribute("aria-label" , "order by");
 	selectedElement.setAttribute("tabindex" , "0");
 
 	selectedElement.classList.add("select-selected");
