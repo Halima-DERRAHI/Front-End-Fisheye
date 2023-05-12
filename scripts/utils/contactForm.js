@@ -1,5 +1,6 @@
 // DOM elements
 const modal = document.getElementById("contact_modal");
+const modalContact = document.querySelector(".modal");
 const form = document.querySelector("form");
 const modalPhotographerName = document.querySelector(".modal-photographer-name");
 
@@ -13,12 +14,13 @@ function displayModal() {
 
 	modal.style.display = "block";
 	
-	// Focus on form first element
-	firstName.focus();
-
 	// Photographer name
 	const photographerName = document.querySelector(".photographer-name");
 	modalPhotographerName.textContent = photographerName.textContent;
+	modalContact.setAttribute("aria-labelledby", `Contactez moi, ${photographerName.textContent}`);
+	
+	// Focus on form first element
+	firstName.focus();
 
 	// Validation on event
 	firstName.addEventListener("input", validateFirstName);
@@ -34,7 +36,6 @@ function displayModal() {
 	
 	// form submit
 	function formSubmit() {
-		validate();
 		if (
 			validateFirstName() &&
         validateLastName() &&
@@ -46,14 +47,6 @@ function displayModal() {
 			hideAllMsg();
 			form.reset();
 		}
-	}
-
-	// validation form
-	function validate() {
-		validateFirstName();
-		validateLastName();
-		validateEmail();
-		validateMessage();
 	}
 
 	// First name validation

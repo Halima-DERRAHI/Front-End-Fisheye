@@ -1,6 +1,7 @@
 main {
     max-width: 1400px;
     margin: auto;
+    margin-bottom: 20px;
 }
 
 /* Header */
@@ -23,9 +24,6 @@ main {
     object-fit: cover;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     margin: 0 20px;
-}
-.photograph-header div {
-    order: -1;
 }
 .photograph-header div h2 {
     color: #D3573C;
@@ -193,6 +191,10 @@ main {
     white-space: nowrap;
 }
 
+.fa-heart {
+    cursor: pointer;
+}
+
 /* Contact form */
 
 #contact_modal {
@@ -291,6 +293,14 @@ border: 2px solid #279e7a;
 border: 2px solid #fe142f;
 }
 
+input::placeholder {
+    color: lightgray;
+}
+
+textarea::placeholder {
+    color: lightgray;
+}
+
 small {
 font-size: 13px;
 color: white;
@@ -319,10 +329,10 @@ p {
     display: inline;
     padding-right: 10px;
 }
-
-.fa-heart {
-    cursor: pointer;
+.total-icon {
+    cursor: auto;
 }
+
 
 /* Lightbox */
 
@@ -399,3 +409,9 @@ p {
     margin: 25px;
 }
 
+@media screen and (max-width: 1220px){
+    .media-container{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

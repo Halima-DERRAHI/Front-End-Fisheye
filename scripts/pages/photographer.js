@@ -25,13 +25,13 @@ async function getPhotographer() {
 // display photographer informations
 
 async function displayPhotographerHeader(photographer) {
-
-	const photographHeader = document.querySelector(".photograph-header");
+	const photographerDesc = document.querySelector(".photograph-description");
+	const photographerImg = document.querySelector(".photograph-img");
 	const headerFactory = await photographHeaderFactory(photographer);
-	const { div, img } = headerFactory;
+	const { h2, h3 , h4, img } = headerFactory;
 
-	photographHeader.appendChild(div);
-	photographHeader.appendChild(img);
+	photographerDesc.append(h2, h3 , h4);
+	photographerImg.appendChild(img);
 }
 
 

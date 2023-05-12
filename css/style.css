@@ -76,3 +76,26 @@ h1 {
     flex-direction: column;
     align-items: center;
 }
+
+@media screen and (max-width: 1043px) {
+    .photographer_section {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .photographer_section {
+        grid-template-columns: 1fr;
+    }
+    .logo{
+        margin-left: 20px;
+    }
+
+    header{
+        flex-direction: column;
+    }
+
+    h1{
+        margin-right: 0;
+    }
+}

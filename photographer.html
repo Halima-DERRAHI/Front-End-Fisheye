@@ -20,7 +20,9 @@
       <!-- Photographer informations -->
 
       <div class="photograph-header">
+        <div class="photograph-description" tabindex="0"></div>
         <button class="contact_button" name="Contact Me" onclick="displayModal()">Contactez-moi</button>
+        <div class="photograph-img"></div>
       </div>
 
       <!-- Select -->
@@ -49,32 +51,32 @@
 
     <!-- Contact Form -->
 
-    <div id="contact_modal">
-        <div class="modal">
+    <div id="contact_modal" aria-label="modal transparent background">
+        <div class="modal" role="dialog">
             <header>
-                <h2>Contactez-moi</h2>
+                <h2 role="text" tabindex="0">Contactez-moi</h2>
                 <img src="assets/icons/close.svg" alt="Close button" tabindex="0" onclick="closeModal()">
             </header>
-            <h2 class="modal-photographer-name"></h2>
+            <h2 tabindex="0" class="modal-photographer-name"></h2>
             <form>
             <div>
-                <label>Prénom</label>
-                <input id ="first" type="text" name="prénom" tabindex="0">
+                <label tabindex="0">Prénom</label>
+                <input id ="first" type="text" placeholder=" prénom" name="prénom" tabindex="0">
                 <small></small>
             </div>
             <div>
-                <label>Nom</label>
-                <input id="last" type="text" name="nom" tabindex="0">
+                <label tabindex="0">Nom</label>
+                <input id="last" type="text" placeholder=" nom" name="nom" tabindex="0">
                 <small></small>
             </div>
             <div>
-                <label>Email</label>
-                <input id="email" type="email" name="email" tabindex="0">
+                <label tabindex="0">Email</label>
+                <input id="email" type="email" placeholder=" email@domaine.com" name="email" tabindex="0">
                 <small></small>
             </div>
             <div>
-                <label>Votre message</label>
-                <textarea tabindex="0"></textarea>
+                <label tabindex="0">Votre message</label>
+                <textarea placeholder=" votre message ici..." tabindex="0"></textarea>
                 <small></small>
             </div>
             <button class="contact_button" tabindex="0">Envoyer</button>
@@ -103,6 +105,7 @@
     <script src="scripts/utils/contactForm.js"></script>
     <script src="scripts/factories/photographer-info.js"></script>
     <script src="scripts/factories/media.js"></script>
+    <script src="scripts/factories/lightbox.js"></script>
     <script src="scripts/utils/sortMedia.js"></script>
 
   </body>
