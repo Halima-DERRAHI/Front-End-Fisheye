@@ -72,7 +72,7 @@ async function init() {
 
 	displayPhotographerHeader(photographer);
 	displayPhotographerMedia(photographers, photographer);
-	displaySortMedia(photographerNameToSort , mediasToSort);
+	displaySelectElement(photographerNameToSort , mediasToSort);
 }   
 
 window.onload = function()

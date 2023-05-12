@@ -197,7 +197,7 @@ iconNext.addEventListener("click", () => nextLightbox());
 function nextLightbox() {
 	const currentIndex = medias.findIndex(media => [media.querySelector("img"), media.querySelector("video")].includes(currentMedia));
 	let nextIndex = currentIndex + 1 ;
-	console.log(medias);	
+
 	if (nextIndex === medias.length) {
 		nextIndex = 0;
 	}
@@ -214,6 +214,7 @@ iconPrev.addEventListener("click", () => prevLightbox());
 function prevLightbox() {
 	const currentIndex = medias.findIndex(media => [media.querySelector("img"), media.querySelector("video")].includes(currentMedia));
 	let prevIndex = currentIndex - 1 ;
+	
 	if (prevIndex === -1) {
 		prevIndex = medias.length - 1;
 	}

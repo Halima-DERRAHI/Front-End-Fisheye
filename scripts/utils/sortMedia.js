@@ -1,4 +1,6 @@
-async function displaySortMedia(photographerName, media) {
+
+
+async function displaySelectElement(photographerName, media) {
 
 	const selectContainer = document.querySelector(".select-container");
 	const selectElement = selectContainer.querySelector("select");
@@ -15,13 +17,17 @@ async function displaySortMedia(photographerName, media) {
 	selectContainer.appendChild(selectedElement);
 	optionsList.classList.add("select-items", "select-hide");
 
-	await sortMedia(selectedElement.textContent);
+	//await sortMedia(selectedElement.textContent);
 	
 	function createOptionItem(option) {
+
+		// Create select option
 
 		const optionItem = document.createElement("div");
 		optionItem.textContent = option.textContent;
 		optionItem.setAttribute("tabindex" , "0");
+
+		// Select option event
 
 		optionItem.addEventListener("click", () => {
 			const previousOptionItem = optionsList.querySelector(".select-hide-option");
@@ -39,10 +45,13 @@ async function displaySortMedia(photographerName, media) {
 		optionItem.addEventListener("keydown", (e) => {
 			if (e.key === "Enter") optionItem.click();
 		});
+
 		return optionItem;
 	}
 
-	for (let option of selectElement.options) {
+	// Create select options list
+
+	selectElement.querySelectorAll("option").forEach(option => {
 		const optionItem = createOptionItem(option);
 		if (selectedElement.textContent !== optionItem.textContent) {
 			optionsList.appendChild(optionItem);
@@ -50,9 +59,11 @@ async function displaySortMedia(photographerName, media) {
 			optionItem.classList.add("select-hide-option");
 			optionsList.insertBefore(optionItem, optionsList.firstChild);
 		}
-	}
+	});
 
 	selectContainer.appendChild(optionsList);
+
+	// Selected element event
 
 	selectedElement.addEventListener("click", (e) => {
 		e.stopPropagation();
@@ -66,12 +77,16 @@ async function displaySortMedia(photographerName, media) {
 		}
 	});
 	
+	// hide select list
+
 	document.body.addEventListener("click" , (e) => {
 		if (!optionsList.contains(e.target)) {
 			optionsList.classList.add("select-hide");
 			selectedElement.classList.remove("select-arrow-active");
 		}
 	});
+
+	// Sorting function
 
 	function sortMedia(sortBy) {
 		let sortedMedia = [];
@@ -92,9 +107,10 @@ async function displaySortMedia(photographerName, media) {
 			});
 		}
 
+		// display sorting medias
+
 		const mediaContainer = document.querySelector(".media-container");
 		mediaContainer.innerHTML = "";
-
 		medias.length = 0;
 		
 		sortedMedia.forEach(async (media) => {

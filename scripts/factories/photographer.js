@@ -18,15 +18,19 @@ function photographerFactory(data) {
 		img.setAttribute("alt", "");
 
 		const h2 = document.createElement( "h2" );
+		h2.setAttribute("tabindex", "0");
 		h2.textContent = name;
 
 		const h3 = document.createElement( "h3" );
+		h3.setAttribute("tabindex", "0");
 		h3.textContent = city + ", " + country;
 
 		const h4 = document.createElement( "h4" );
+		h4.setAttribute("tabindex", "0");
 		h4.textContent = tagline;
 
 		const p = document.createElement( "p" );
+		p.setAttribute("tabindex", "0");
 		p.textContent = price + "€" + "/jour";
 		
 		a.appendChild(img);
