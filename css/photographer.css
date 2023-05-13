@@ -10,7 +10,7 @@ main {
     background-color: #FAFAFA;
     height: 300px;
     margin: 0 100px;
-    padding: 30px;
+    padding: 0 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -230,6 +230,7 @@ main {
 
 .modal header img {
     cursor: pointer;
+    filter: brightness(0) invert(1);
 }
 
 .modal header h2 {

@@ -32,7 +32,7 @@ function lightboxFactory(mediaContainer) {
 	titleElement.classList.add("new_media_title");
 	titleElement.textContent = mediaTitle;
 	lightboxMedia.appendChild(titleElement);
-
+	lightboxMedia.focus();
 }
 
 // Close lightbox function
@@ -92,3 +92,29 @@ function prevLightbox() {
 	lightboxFactory(prevMedia);
 }
 
+// the elements inside modal to make focusable
+
+const  focusElements = "lightbox-media, span";
+const firstFocusElement = lightbox.querySelectorAll(focusElements)[0];
+const focusContent = lightbox.querySelectorAll(focusElements);
+const lastFocusElement = focusContent[focusContent.length - 1];
+
+document.addEventListener("keydown", (e) => {
+	let isTabPressed = e.key === "Tab";
+  
+	if (!isTabPressed) {
+		return;
+	}
+  
+	if (e.shiftKey) {
+		if (document.activeElement === firstFocusElement) {
+			lastFocusElement.focus();
+			e.preventDefault();
+		}
+	} else { 
+		if (document.activeElement === lastFocusElement) { 
+			firstFocusElement.focus();	
+			e.preventDefault();
+		}
+	}
+});

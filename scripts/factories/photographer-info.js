@@ -33,6 +33,7 @@ function photographerFooterFactory(totalLikes, photographer) {
 	likes.className = "total-likes";
 	likes.textContent = `${totalLikes}`; 
 	likes.setAttribute("tabindex", "0");
+	likes.setAttribute("aria-label", `total des likes ${totalLikes}`);
 	likesElement.appendChild(likes);
 
 	const likesIcon = document.createElement("i");
@@ -42,6 +43,7 @@ function photographerFooterFactory(totalLikes, photographer) {
 
 	const priceElement = document.createElement("p");
 	priceElement.textContent = `${photographer.price} €/jour`;
+	priceElement.setAttribute("aria-label", `le prix est de ${photographer.price} € par jour`);
 	priceElement.setAttribute("tabindex", "0");
 
 	footerInfo.innerHTML = "";

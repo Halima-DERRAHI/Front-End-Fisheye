@@ -74,7 +74,7 @@ function mediaInfoFactory(title, likes, media, mediaElement ) {
 	mediaLikes.classList.add("media_likes");
 
 	const likesNumber = document.createElement("p");
-	likesNumber.setAttribute("aria-label", "nombre de likes");
+	likesNumber.setAttribute("aria-label", `nombre de likes ${likes}`);
 	likesNumber.textContent = likes;
 
 	const likesIcon = document.createElement("i");
@@ -117,6 +117,7 @@ function manageLikes(media, likesNumber , likesIcon) {
 		
 		likesNumber.textContent = newLikes;
 		totalLikes.textContent = parseInt(totalLikes.textContent) + 1;
+		likesIcon.setAttribute("aria-label" , "avec like");
 		likesIcon.className = "fas-sharp fa-solid fa-heart";
 	}
 	else {
@@ -125,6 +126,7 @@ function manageLikes(media, likesNumber , likesIcon) {
 
 		likesNumber.textContent = newLikes;
 		totalLikes.textContent = parseInt(totalLikes.textContent) - 1;
+		likesIcon.setAttribute("aria-label" , "sans like");
 		likesIcon.className = "fas-sharp fa-regular fa-heart";
 	}
 }

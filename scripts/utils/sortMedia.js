@@ -9,11 +9,12 @@ async function displaySelectElement(photographerName, media) {
 	
 	selectedElement.setAttribute("role" , "button");
 	selectedElement.setAttribute("name" , "sort");
-	selectedElement.setAttribute("aria-label" , "order by");
+	selectedElement.setAttribute("aria-label" , "trier par");
 	selectedElement.setAttribute("tabindex" , "0");
 
 	selectedElement.classList.add("select-selected");
 	selectedElement.textContent = selectElement.options[selectElement.selectedIndex].textContent;
+	
 	selectContainer.appendChild(selectedElement);
 	optionsList.classList.add("select-items", "select-hide");
 
@@ -41,7 +42,7 @@ async function displaySelectElement(photographerName, media) {
 			optionsList.insertBefore(optionItem, optionsList.firstChild);
 			sortMedia(optionItem.textContent);
 		});
-
+		
 		optionItem.addEventListener("keydown", (e) => {
 			if (e.key === "Enter") optionItem.click();
 		});
@@ -81,6 +82,13 @@ async function displaySelectElement(photographerName, media) {
 
 	document.body.addEventListener("click" , (e) => {
 		if (!optionsList.contains(e.target)) {
+			optionsList.classList.add("select-hide");
+			selectedElement.classList.remove("select-arrow-active");
+		}
+	});
+
+	document.addEventListener("keydown", e => {
+		if (e.key === "Escape") {
 			optionsList.classList.add("select-hide");
 			selectedElement.classList.remove("select-arrow-active");
 		}
