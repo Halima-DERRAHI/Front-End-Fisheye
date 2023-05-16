@@ -8,12 +8,12 @@ async function getPhotographers() {
 	return photographers;
 }
 
+// get photographer by url id
+
 const url = document.location.href;
 const urlId = new URL(url);
 const params = new URLSearchParams(urlId.search);
 const paramsId = params.get("id");
-
-// get photographer by url id
 
 async function getPhotographer() {
 	const { photographers } = await getPhotographers();
