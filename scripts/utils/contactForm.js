@@ -153,7 +153,7 @@ function displayModal() {
 			return false;
 		}
 		// Check if the string is valid
-		else if (!message.value.match(/^[a-zA-Z\s-']+$/g)) {
+		else if (!message.value.match(/^[a-zA-Z0-9\s\p{P}]+$/g)) {
 			checkMsg(message, "Veuillez entrer un message valide.", "input-error");
 			return false;
 		}
