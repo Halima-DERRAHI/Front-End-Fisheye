@@ -14,6 +14,7 @@ function displayModal() {
 
 	modal.style.display = "block";
 	
+	// hide all messages when form is empty
 	if(!firstName.value.trim() && !lastName.value.trim() && !email.value.trim() && !message.value.trim()) {
 		hideAllMsg();
 	}
