@@ -61,6 +61,10 @@ main {
     background-color: #DB8876;
     color: black;
 }
+.contact_button:focus {
+    background-color: #DB8876;
+    color: black;
+}
 
 /* Select */
 
