@@ -14,6 +14,10 @@ function displayModal() {
 
 	modal.style.display = "block";
 	
+	if(!firstName.value.trim() && !lastName.value.trim() && !email.value.trim() && !message.value.trim()) {
+		hideAllMsg();
+	}
+
 	// Photographer name
 	const photographerName = document.querySelector(".photographer-name");
 	modalPhotographerName.textContent = photographerName.textContent;
@@ -47,8 +51,8 @@ function displayModal() {
 		) {
 			displayConsole();
 			closeModal();
-			hideAllMsg();
 			form.reset();
+			hideAllMsg();
 		}
 	}
 
@@ -175,10 +179,10 @@ function displayModal() {
 	}
 	// Remove all messages
 	function hideAllMsg() {
-		checkMsg(firstName, "", "");
-		checkMsg(lastName, "", "");
-		checkMsg(email, "", "");
-		checkMsg(message, "", "");
+		checkMsg(firstName, " ", " ");
+		checkMsg(lastName, " ", " ");
+		checkMsg(email, " ", " ");
+		checkMsg(message, " ", " ");
 	}
 
 }
